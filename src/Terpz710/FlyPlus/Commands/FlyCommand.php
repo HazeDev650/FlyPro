@@ -17,7 +17,7 @@ class FlyCommand extends Command {
         parent::__construct("fly", "Toggle flying");
         $this->plugin = $plugin;
         $this->config = $config;
-        $this->setPermission("flyplugin.fly");
+        $this->setPermission("flyplus.fly");
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
