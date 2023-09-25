@@ -9,7 +9,7 @@ use pocketmine\utils\Config;
 use pocketmine\plugin\PluginOwned;
 use pocketmine\plugin\Plugin;
 
-class SetHubCommand extends Command implements PluginOwned {
+class FlyCommand extends Command implements PluginOwned {
 
     private $config;
     private $plugin;
