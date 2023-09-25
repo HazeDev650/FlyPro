@@ -4,7 +4,7 @@ namespace Terpz710\FlyPlus\Commands;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use Terpz710\FlyPlus\Main;
 use pocketmine\utils\Config;
 
