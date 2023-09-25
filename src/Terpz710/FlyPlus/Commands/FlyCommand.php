@@ -60,6 +60,11 @@ class FlyCommand extends Command implements PluginOwned {
                     $sender->setFlying(false);
                 }
                 $sender->setAllowFlight(false);
+
+                if (!$sender->isOnGround()) {
+                    $sender->setHealth($sender->getMaxHealth());
+                }
+
                 $sender->sendMessage($this->config->get("fly_message_off", "You have landed."));
                 $this->sendFlyTitle($sender, "fly_title_off", "fly_subtitle_off");
             }
