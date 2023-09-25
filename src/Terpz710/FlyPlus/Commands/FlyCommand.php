@@ -10,6 +10,7 @@ use pocketmine\plugin\PluginOwned;
 use pocketmine\plugin\Plugin;
 
 class FlyCommand extends Command {
+    use PluginOwned;
 
     private $config;
     private $plugin;
@@ -26,7 +27,6 @@ class FlyCommand extends Command {
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
-
         if (!$sender instanceof Player) {
             $sender->sendMessage("This command can only be used by players.");
             return true;
@@ -38,27 +38,25 @@ class FlyCommand extends Command {
         }
 
         if (empty($args)) {
+            $sender->sendMessage("Usage: /fly [on|off]");
+            return true;
+        }
+
+        $subcommand = strtolower($args[0]);
+        if ($subcommand === "on") {
+            $sender->setAllowFlight(true);
+            $sender->sendMessage($this->config->get("fly_message_on", "You are now flying!"));
+            $this->sendFlyTitle($sender, "fly_title_on", "fly_subtitle_on");
+        } elseif ($subcommand === "off") {
             if ($sender->getAllowFlight()) {
+                if ($sender->isFlying()) {
+                    $sender->setFlying(false);
+                }
                 $sender->setAllowFlight(false);
                 $sender->sendMessage($this->config->get("fly_message_off", "You have landed."));
                 $this->sendFlyTitle($sender, "fly_title_off", "fly_subtitle_off");
             } else {
-                $sender->setAllowFlight(true);
-                $sender->sendMessage($this->config->get("fly_message_on", "You are now flying!"));
-                $this->sendFlyTitle($sender, "fly_title_on", "fly_subtitle_on");
-            }
-        } elseif (count($args) === 1) {
-            $subcommand = strtolower($args[0]);
-            if ($subcommand === "on") {
-                $sender->setAllowFlight(true);
-                $sender->sendMessage($this->config->get("fly_message_on", "You are now flying!"));
-                $this->sendFlyTitle($sender, "fly_title_on", "fly_subtitle_on");
-            } elseif ($subcommand === "off") {
-                $sender->setAllowFlight(false);
-                $sender->sendMessage($this->config->get("fly_message_off", "You have landed."));
-                $this->sendFlyTitle($sender, "fly_title_off", "fly_subtitle_off");
-            } else {
-                $sender->sendMessage("Usage: /fly [on|off]");
+                $sender->sendMessage("You are already on the ground.");
             }
         } else {
             $sender->sendMessage("Usage: /fly [on|off]");
