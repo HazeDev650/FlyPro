@@ -13,7 +13,7 @@ class FlyCommand extends Command {
     private $plugin;
     private $config;
 
-    public function __construct(FlyPlugin $plugin, Config $config) {
+    public function __construct(Main $plugin, Config $config) {
         parent::__construct("fly", "Toggle flying");
         $this->plugin = $plugin;
         $this->config = $config;
