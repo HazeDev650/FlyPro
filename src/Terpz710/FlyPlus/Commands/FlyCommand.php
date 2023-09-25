@@ -5,17 +5,14 @@ namespace Terpz710\FlyPlus\Commands;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
-use Terpz710\FlyPlus\Main;
 use pocketmine\utils\Config;
 
 class FlyCommand extends Command {
 
-    private $plugin;
     private $config;
 
-    public function __construct(Main $plugin, Config $config) {
+    public function __construct(Config $config) {
         parent::__construct("fly", "Toggle flying");
-        $this->plugin = $plugin;
         $this->config = $config;
         $this->setPermission("flyplus.fly");
     }
@@ -27,7 +24,7 @@ class FlyCommand extends Command {
             return true;
         }
 
-        if (!$sender->hasPermission("flyplugin.fly")) {
+        if (!$sender->hasPermission("flyplus.fly")) {
             $sender->sendMessage("You don't have permission to use this command.");
             return true;
         }
