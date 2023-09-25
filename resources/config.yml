@@ -1,0 +1,11 @@
+# Customize the messages and titles shown when flying and landing
+
+fly_message_on: "You are now flying!"
+fly_message_off: "You have landed."
+fly_title_on: "Fly Mode Enabled"
+fly_subtitle_on: "Enjoy the skies"
+fly_title_off: "Fly Mode Disabled"
+fly_subtitle_off: "Back to the ground"
+fly_title_fade_in: 10
+fly_title_stay: 40
+fly_title_fade_out: 10
