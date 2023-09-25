@@ -42,20 +42,26 @@ class FlyCommand extends Command implements PluginOwned {
         }
 
         $subcommand = strtolower($args[0]);
+        $currentStatus = $sender->getAllowFlight();
+
         if ($subcommand === "on") {
-            $sender->setAllowFlight(true);
-            $sender->sendMessage($this->config->get("fly_message_on", "You are now flying!"));
-            $this->sendFlyTitle($sender, "fly_title_on", "fly_subtitle_on");
+            if ($currentStatus) {
+                $sender->sendMessage("Fly is already enabled.");
+            } else {
+                $sender->setAllowFlight(true);
+                $sender->sendMessage($this->config->get("fly_message_on", "You are now flying!"));
+                $this->sendFlyTitle($sender, "fly_title_on", "fly_subtitle_on");
+            }
         } elseif ($subcommand === "off") {
-            if ($sender->getAllowFlight()) {
+            if (!$currentStatus) {
+                $sender->sendMessage("Fly is already disabled.");
+            } else {
                 if ($sender->isFlying()) {
                     $sender->setFlying(false);
                 }
                 $sender->setAllowFlight(false);
                 $sender->sendMessage($this->config->get("fly_message_off", "You have landed."));
                 $this->sendFlyTitle($sender, "fly_title_off", "fly_subtitle_off");
-            } else {
-                $sender->sendMessage("You are already on the ground.");
             }
         } else {
             $sender->sendMessage("Usage: /fly [on|off]");
